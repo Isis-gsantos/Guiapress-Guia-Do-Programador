@@ -1,0 +1,25 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+
+<body>
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h2>Edição de Categoria</h2>
+            </div>
+            
+            <div class="card-body">
+                <form method="POST" action="/categories/update">
+                    <input class="form-control" type="text" name="title" placeholder="Defina o título da categoria" value="<%= category.title %>">
+                    <input type="hidden" name="id" value="<%= category.id %>">
+                    <!-- com o value estou acessando o titulo da minha categoria e printando esse titulo dentro do value do formulário -->
+                    <br>
+                    <button class="btn btn-success">Atualizar</button>
+               </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include ('../../partials/footer.ejs') %>
