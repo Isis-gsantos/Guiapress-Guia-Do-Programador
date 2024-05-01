@@ -19,7 +19,6 @@
                         <% categories.forEach((category) => { %>
                             <% if(category.id == article.categoryId) { %>
                                 <option value="<%= category.id %>" selected><%= category.title %></option>
-                                <!-- dependendo da categoria do artigo ela vai vir como selecionada. Se a categoria do artigo por ex for docker o que vai aparecer selecionado vai ser o docker e não a primeira categoria que aparece no select -->
                             <% } else { %>
                                 <option value="<%= category.id %>"><%= category.title %></option>
                             <% } %>
@@ -48,11 +47,8 @@
         plugins: [
             'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons' 
         ],
-        //para aparecer o texto original dentro do tinymce para que ele seja editável chama o init_instance_callback, isso é uma função que vai ser chamada sempre que o editor acabar de ser carregado, dentro dela vai escrever o código que vai carregar o conteúdo da div content e jogar dentro do tinymce 
         init_instance_callback: () => {
             tinymce.get("article").setContent($("#content").html())
-            //dentro do get fala qual textarea que eu quero mexer, nesse caso a que tem o id article, e defina o conteúdo dela
-            //para carregar o conteúdo da div content foi usado o Jquery chamando pelo $ e dentro dele vou chamar a div pelo id content. feito isso quero pegar o conteúdo que está dentro da div (representgado pelo .html através do jquery)
         }
     });
 </script>

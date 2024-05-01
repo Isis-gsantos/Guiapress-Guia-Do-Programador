@@ -3,25 +3,23 @@ const router = express.Router();
 const Category = require("../categories/Category");
 const Article = require("./Article");
 const slugify = require("slugify");
+const adminAuth =  require("../middlewares/adminAuths");
 
-router.get("/admin/articles", (req, res) => {
+router.get("/admin/articles", adminAuth, (req, res) => {
     Article.findAll({
         include: [{model: Category}]
-        //ou seja, estou falando para o sequelize que na busca de artigos ele inclua os dados do tipo Category, ele faz isso pelo relacionamento (belongsTo)
-        //agora com o include em mãos eu vou até minah view e onde trm categoryId vai mudar por category.title
     }).then((articles => {
         res.render("admin/articles/index", {articles: articles})
-        //para puxar o nome da categoria do artigo (ao invés de aparecer apenas o id da categoria que escolhi para o artigo vai ser o nome) tem que dar um join na busca. Dentro do findAll abre um objeto json e dentro dele passa include: [{model: --}]
     }));
 });
 
-router.get("/admin/articles/new", (req, res) => {
+router.get("/admin/articles/new", adminAuth, (req, res) => {
     Category.findAll().then(categories => {
         res.render("admin/articles/new", {categories: categories})
     })
 });
 
-router.post("/articles/save", (req, res) => {
+router.post("/articles/save", adminAuth, (req, res) => {
     var title = req.body.title; 
     var body = req.body.body; 
     var category = req.body.category;  
@@ -36,7 +34,7 @@ router.post("/articles/save", (req, res) => {
     });
 });
 
-router.post("/articles/delete", (req, res) => {
+router.post("/articles/delete", adminAuth, (req, res) => {
     var id = req.body.id;
     if(id != undefined) {
         if(!isNaN(id)) {
@@ -55,7 +53,7 @@ router.post("/articles/delete", (req, res) => {
     }
 });
 
-router.get("/admin/articles/edit/:id", (req, res) => {
+router.get("/admin/articles/edit/:id", adminAuth, (req, res) => {
     var id = req.params.id;
 
     Article.findByPk(id).then(article => {
@@ -71,7 +69,7 @@ router.get("/admin/articles/edit/:id", (req, res) => {
     })
 });
 
-router.post("/articles/update", (req, res) => {
+router.post("/articles/update", adminAuth, (req, res) => {
     var id = req.body.id;
     var title = req.body.title;
     var body = req.body.body; 
@@ -97,7 +95,6 @@ router.get("/articles/page/:num", (req, res) => {
         offset = 0;
     } else {
         offset = (parseInt(page) - 1) * 4;
-        //diminuiu o offset por 1 por causa que não exibia todos os artigos devido a um bug
     }
 
     Article.findAndCountAll({
@@ -117,7 +114,7 @@ router.get("/articles/page/:num", (req, res) => {
         var result = {
             articles: articles,
             next: next,
-            page: parseInt(page) //diz qual é a página atual (que consegue através do parâmetro page que é uma string)
+            page: parseInt(page) 
         }
 
         Category.findAll().then(categories => {

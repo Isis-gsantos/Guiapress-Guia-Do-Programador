@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
-const Category = require("../categories/Category"); //importando o módulo Category 
+const Category = require("../categories/Category");
 
 const Article = connection.define('articles', {
     title: {
@@ -14,16 +14,11 @@ const Article = connection.define('articles', {
         type: Sequelize.TEXT,
         allowNull: false
     }
-    //o body é o conteúdo do artigo (texto) que vai ser escrito
 })
 
-Category.hasMany(Article); //1 relacionamento
-// //hasMany representa relações 1-p-N, uma categoria tem muitos artigos
+Category.hasMany(Article); 
 
-//como falar que um artigo pertence a uma categoria:
-Article.belongsTo(Category); //1 relacionamento
-//dentro do belongsTo() eu coloco o model que quero me relacionar. Ele representa um relacionamento 1-p-1 no sequelize
+Article.belongsTo(Category); 
 
-// Article.sync({force: true});
 
 module.exports = Article; 

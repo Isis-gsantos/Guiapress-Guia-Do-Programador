@@ -6,7 +6,6 @@
         <hr>
 
         <% result.articles.rows.forEach(article => { %>
-            <!-- os artigos estão dentro do result, por isso tive que chamar o result antes. Quando se trabalha com o método findAndCountAll() ele retorna 2 coisas que é a count (quantidade de elementos que tem) e as rows (que é basicamente a lista de artigos) -->
             <div class="card">
                 <div class="card-header">
                     <h2><%= article.title %></h2>

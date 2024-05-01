@@ -17,17 +17,16 @@ app.set("view engine", "ejs");
 
 //Sessions
 app.use(session({
-    secret: "kasdkasdlsd", //palavra qualquer que o express-session vai utilizar para aumentar a segurança das sessões. É como se fosse uma senha para decriptar as sessões, como se fosse o salt do bcrypt, é recomendado colocar algo bem aleatório
-    cookie: { maxAge: 30000 } //configurando a forma como o cookie vai ser salvo no navegador do usuário. Os dados da sessão ficam salvos no servidor, mas a sessão precisa de um cookie para funcionar, ele é como se fosse um cookie de identificação (ele vai dizer que o usuário tem uma sessão no servidor)
-    //os cookies tem a capacidade de expirar, então coloca o tempo de expiração dele através do atributo maxAge (o valor é em milissegundos)
+    secret: "kasdkasdlsd", 
+    cookie: { maxAge: 30000000 } 
 }))
 
 //Static 
 app.use(express.static('public'));
 
 //Body parser
-app.use(bodyParser.urlencoded({extended: false})); //aceita dados de formulário
-app.use(bodyParser.json()); //aceita dados do formato json
+app.use(bodyParser.urlencoded({extended: false})); 
+app.use(bodyParser.json()); 
 
 //Database
 connection
